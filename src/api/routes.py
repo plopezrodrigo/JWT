@@ -15,15 +15,15 @@ api = Blueprint('api', __name__)
 # create_access_token() function is used to actually generate the JWT.
 @api.route("/token", methods=["POST"])
 def create_token():
-    username = request.json.get("email", None)
+    email = request.json.get("email", None)
     password = request.json.get("password", None)
     user = User.query.filter_by(email=email, password=password).first()
     if not user:
         return jsonify({"msg": "Bad username or password"}), 401
 
-    access_token = create_access_token(identity=email)
-    return jsonify({    "token": access_token, 
-                        "user": user.serialize(),
+    access_token = create_access_token(identity=user.email)
+    return jsonify({    "msg": "token creado",
+                        "token": access_token, 
                     })
 
 
@@ -42,18 +42,16 @@ def get_hello():
 def signup():
     data = request.json
     subs = False
-
     try:
-        user = User.query.filter_by(email=data['user']).first()
+        user = User.query.filter_by(email=data['email']).first()
         if user:
             return jsonify({"msg": "No se puede crear este usuario porque ya existe"}), 401
         else:
-            user = User(email=data['user'], password=data['password'], is_active=False)
+            user = User(email=data['email'], password=data['password'], is_active=False)
             db.session.add(user)
             db.session.commit()
-
     except Exception as e:
         db.session.rollback()
-        return jsonify({"msg": "No se puede crear este usuario"}), 402
-
+        message_error = str(e)
+        return jsonify({"msg": "No se puede crear este usuario", "error": message_error}), 400
     return jsonify({"msg": "Usuario creado correctamente"}), 200

@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate, Link } from "react-router-dom";
+
 import "../../styles/home.css";
 
 const Login = () => {
@@ -9,6 +10,7 @@ const Login = () => {
   const [shown, setShown] = useState(false);
   const [mensaje, setMensaje] = useState(null);
   const navigate = useNavigate();
+
 
 
   useEffect(() => {
@@ -28,7 +30,6 @@ const Login = () => {
     actions.login(data.email, data.password).then((response) => {
     if (response) navigate("/");
     else{ setMensaje("Las credenciales no son correctas");
-          toggleModal();
         } 
     })
   };
@@ -95,7 +96,7 @@ const Login = () => {
                       <p className="ms-3 me-3 mb-3 text-center">
                       ¿No tienes una cuenta?
                       <p className="ms-3 me-3 mt-3 text-center">
-                      <Link to="/signupUser">
+                      <Link to="/signup">
                       <strong className="strong "> Registrate </strong>
                       </Link>
                       </p>

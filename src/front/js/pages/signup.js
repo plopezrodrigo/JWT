@@ -48,7 +48,7 @@ export const Signup = () => {
 		  <div className="container text-center">
 			<div className="row d-flex justify-content-center align-items-center h-100">
 			  <h3>¡Hola de nuevo!</h3>
-			  <p className="mb-3">Bienvenido a tu App para valorar establecimientos</p>
+			  <p className="mb-3">Bienvenido a tu App</p>
 			<div className="col-12 col-md-8 col-lg-6 col-xl-5">
 				<div className="card px-3" id="card">
 					<form className="form-outline" onSubmit={handleSubmit}>
